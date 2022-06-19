@@ -1,10 +1,13 @@
 package com.borombo.hello.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -25,6 +28,11 @@ private val LightColorPalette = lightColors(
     onBackground = Color.Black,
     onSurface = Color.Black,
     */
+)
+
+val KeyboardNumberNext = KeyboardOptions(
+    keyboardType = KeyboardType.Number,
+    imeAction = ImeAction.Next
 )
 
 @Composable

@@ -10,9 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.borombo.hello.R
 import com.borombo.hello.ui.theme.HelloTheme
+import com.borombo.hello.ui.theme.KeyboardNumberNext
 
 @Composable
 fun FormulaFormScreen(navController: NavController, formViewModel: FormViewModel = FormViewModel()){
@@ -65,7 +67,7 @@ fun FormButton(formIsValid: State<Boolean>, onClick: () -> Unit){
 @Composable
 fun FormTitle(){
     Text(
-        text = "Formula Form",
+        text = stringResource(id = R.string.formula_title),
         fontSize = 48.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
@@ -82,7 +84,7 @@ fun MultipliersForm(
     var multiplierTwo by remember { mutableStateOf(TextFieldValue()) }
 
     Column(modifier = Modifier.padding(8.dp)) {
-        Text(text = "Multipliers")
+        Text(text = stringResource(id = R.string.multipliers))
         Spacer(modifier = Modifier.height(8.dp))
         Row(modifier = Modifier) {
             TextField(
@@ -93,14 +95,9 @@ fun MultipliersForm(
                         onMultiplierOneChanged(value.text)
                 },
                 placeholder = {
-                    Text("Multiplier 1")
+                    Text(stringResource(id = R.string.hint_multiplier_1))
                 },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-
-
+                keyboardOptions = KeyboardNumberNext,
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -112,9 +109,9 @@ fun MultipliersForm(
                         onMultiplierTwoChanged(value.text)
                 },
                 placeholder = {
-                    Text("Multiplier 2")
+                    Text(stringResource(id = R.string.hint_multiplier_2))
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
+                keyboardOptions = KeyboardNumberNext,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -131,7 +128,7 @@ fun LimitForm(
     Column(modifier = Modifier
         .padding(8.dp)
         .wrapContentHeight()) {
-        Text(text = "Limits")
+        Text(text = stringResource(id = R.string.limit))
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = limit,
@@ -141,13 +138,14 @@ fun LimitForm(
                     onLimitChanged(value.text)
             },
             placeholder = {
-                Text("Limit ")
+                Text(stringResource(id = R.string.hint_limit))
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardNumberNext,
             modifier = Modifier.fillMaxWidth()
         )
     }
 }
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -161,7 +159,7 @@ fun TextsForm(
 
 
     Column(modifier = Modifier.padding(8.dp)) {
-        Text(text = "Texts")
+        Text(text = stringResource(id = R.string.texts))
         Spacer(modifier = Modifier.height(8.dp))
         Row(modifier = Modifier) {
             TextField(
@@ -172,7 +170,7 @@ fun TextsForm(
                         onTextOneChanged(value.text)
                 },
                 placeholder = {
-                    Text("Text 1")
+                    Text(stringResource(id = R.string.hint_word_1))
                 },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 modifier = Modifier.weight(1f)
@@ -186,7 +184,7 @@ fun TextsForm(
                         onTextTwoChanged(value.text)
                 },
                 placeholder = {
-                    Text("Text 2")
+                    Text(stringResource(id = R.string.hint_word_2))
                 },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(

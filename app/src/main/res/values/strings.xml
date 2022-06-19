@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Hello</string>
+
+    <string name="formula_title">Formula Form</string>
+    <string name="list_title">Generated List</string>
+
+    <string name="multipliers">Multipliers</string>
+    <string name="limit">Limit</string>
+    <string name="texts">Texts</string>
+
+    <string name="hint_multiplier_1">3</string>
+    <string name="hint_multiplier_2">5</string>
+    <string name="hint_limit">100</string>
+    <string name="hint_word_1">Fizz</string>
+    <string name="hint_word_2">Buzz</string>
+
 </resources>
