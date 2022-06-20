@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,23 +18,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.borombo.hello.R
 import com.borombo.hello.ui.theme.HelloTheme
 
 @Composable
-fun ListScreen(listViewModel: ListViewModel = ListViewModel()){
+fun ListScreen(listViewModel: ListViewModel = hiltViewModel()){
 
-    // Convert the LiveData to a state to be able to update the view accordingly
-    val list by listViewModel.list.observeAsState(listOf())
+    val listState = rememberLazyListState()
+
+    val firstItem by rememberSaveable { derivedStateOf { listState.firstVisibleItemIndex } }
+
+    if (firstItem > listViewModel.loadMoreThreshold){
+        listViewModel.loadMore()
+    }
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)) {
         ListTitle()
         LazyColumn(
+            state = listState,
             modifier = Modifier.fillMaxSize()
         ) {
-            items(list) { item ->
+            items(listViewModel.valueList) { item ->
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -45,7 +52,6 @@ fun ListScreen(listViewModel: ListViewModel = ListViewModel()){
                         fontSize = 24.sp,
                         textAlign = TextAlign.Center
                     )
-
                 }
             }
         }

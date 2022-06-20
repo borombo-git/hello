@@ -5,8 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import com.borombo.hello.FormulaManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class FormViewModel: ViewModel() {
+@HiltViewModel
+class FormViewModel @Inject constructor() : ViewModel() {
 
     // Enum to know which position we modify
     enum class POSITION{
@@ -22,7 +25,7 @@ class FormViewModel: ViewModel() {
     // Variables of the form
     private var multiplierOne: Int = 0
     private var multiplierTwo: Int = 0
-    private var limit: Int = 0
+    private var limit: Long = 0
     private var textOne: String = ""
     private var textTwo: String = ""
 
@@ -55,7 +58,7 @@ class FormViewModel: ViewModel() {
      */
     fun setLimit(value: String){
         limit = if(value.isDigitsOnly()){
-            value.toInt()
+            value.toLong()
         } else{
             0
         }
@@ -83,7 +86,7 @@ class FormViewModel: ViewModel() {
     private fun checkFormValidity(){
         val multiplierOneIsValid = multiplierOne != 0
         val multiplierTwoIsValid = multiplierTwo != 0
-        val limitIsValid = limit != 0
+        val limitIsValid = limit != 0L
         val textOneIsValid = textOne.isNotEmpty()
         val textTwoIsValid = textTwo.isNotEmpty()
 
@@ -94,6 +97,6 @@ class FormViewModel: ViewModel() {
      * Call the manager to generate the list with all the params needed from the form
      */
     fun generateList(){
-        FormulaManager.generateList(multiplierOne, multiplierTwo, limit, textOne, textTwo)
+        FormulaManager.saveValues(multiplierOne, multiplierTwo, limit, textOne, textTwo)
     }
 }

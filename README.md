@@ -6,7 +6,7 @@ Hello est la réalisation de du test technique pour la liste FizzBuzz.
 - [Étapes](#etapes)
 - [UI](#ui)
 - [Formule](#formule)
-- [Otimisation](#optimisation)
+- [Optimisation](#optimisation)
 - [Conclusion](#conclusion)
 
 
@@ -28,7 +28,7 @@ Il a quand même fallut ajouter un peu de logique a cette étape pour gérer les
 
 Le tout se fait assez simplement avec un viewModel, les composants s'occupe uniquement de l'affichage. 
 
-## Formule (Logique)
+## Formule
 
 Ici l'idée était d'obtenir la liste le plus facilement possible.
 Pour cela, la première étape est d'utiliser une boucle for jusqu'à la limite pour générer la liste et l'envoyer à la vue.
@@ -36,4 +36,30 @@ Une fois fonctionnelle, le but est de tester l'app pour voir si des problèmes s
 
 ## Optimisation
 
+L'optimisation a été la partie la plus longue afin d'arriver à un résultat concluant. 
+Comme prévu, l'utilisation d'une simple boucle ses limites.
+
+Le premier problème a été le freeze de l'app de quelques secondes lors du chargement de la nouvelle page. 
+La solution à été de réaliser les calcul dans un autre thread.
+
+Une fois ce thread en place, l'utilisation de Flow permet d'incrémenter la liste à chaque calcul d'un élément.
+Le problème a été que la vue devais se mettre à jour trop souvent et causais donc des ralentissement. Un buffer à été mis en place et calculer à partir de la limit donnée afin de mettre à jour la vue beaucoup moins souvent (par lot de 500 items par exemple).
+
+Le dernier problème a été le remplissage de la mémoire au bout de quelque instant, avec une limite très haute. malgré le buffer, les calculs continuent en arrière plan et remplissent la mémoire. 
+
+Pour palier à celà un système de "pagination" à été utilisé, afin d'effectuer le calcul uniquement pour un certain nombre d'élement nécessaire, en fonction du scroll dans la liste.
+
+A ce point nous arrivons à une expérience fluide et sans soucis de mémoire, même avec une limité élevée. 
+
 ## Conclusion
+
+La réalisation du projet aurait pu être plus simple si j'étais directement partie avec la solution optimale dès le début, mais je voulais voir au fur et à mesure les problèmes que je pouvais rencontrer et les solution que j'allais trouver à ces problèmes.
+
+De plus en utilisant de nouveaux framework, j'ai rencontré des petits imprévus (gestion du cycle de vie avec Compose et les fiew model, scope de couroutines ou passage de LiveData à Flow puis State...) mais qui m'ont permis de mieux les apréhender. 
+
+Avec plus de temps, il pourrait être utile de voir si, avec une grande limite et un scroll assez long, la liste ne prends pas trop de place en mémoire.
+
+Pousser un peu plus l'injection de dépendance avec Hilt (notamment pour mon manager) peut être une piste également
+
+Une amélioration de l'UI est aussi très envisageable!
+

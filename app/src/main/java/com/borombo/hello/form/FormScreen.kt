@@ -7,6 +7,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.borombo.hello.R
@@ -25,7 +27,7 @@ import com.borombo.hello.ui.theme.HelloTheme
 import com.borombo.hello.ui.theme.KeyboardNumberNext
 
 @Composable
-fun FormulaFormScreen(navController: NavController, formViewModel: FormViewModel = FormViewModel()){
+fun FormulaFormScreen(navController: NavController, formViewModel: FormViewModel = hiltViewModel()){
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         modifier = Modifier
@@ -80,8 +82,8 @@ fun MultipliersForm(
     onMultiplierOneChanged: (String) -> Unit,
     onMultiplierTwoChanged: (String) -> Unit,
 ){
-    var multiplierOne by remember { mutableStateOf(TextFieldValue()) }
-    var multiplierTwo by remember { mutableStateOf(TextFieldValue()) }
+    var multiplierOne by rememberSaveable { mutableStateOf(TextFieldValue()) }
+    var multiplierTwo by rememberSaveable { mutableStateOf(TextFieldValue()) }
 
     Column(modifier = Modifier.padding(8.dp)) {
         Text(text = stringResource(id = R.string.multipliers))
@@ -123,7 +125,7 @@ fun MultipliersForm(
 fun LimitForm(
     onLimitChanged: (String) -> Unit,
 ){
-    var limit by remember { mutableStateOf(TextFieldValue()) }
+    var limit by rememberSaveable { mutableStateOf(TextFieldValue()) }
 
     Column(modifier = Modifier
         .padding(8.dp)
@@ -153,8 +155,8 @@ fun TextsForm(
     onTextOneChanged: (String) -> Unit,
     onTextTwoChanged: (String) -> Unit,
 ){
-    var textOne by remember { mutableStateOf(TextFieldValue()) }
-    var textTwo by remember { mutableStateOf(TextFieldValue()) }
+    var textOne by rememberSaveable { mutableStateOf(TextFieldValue()) }
+    var textTwo by rememberSaveable { mutableStateOf(TextFieldValue()) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
 
